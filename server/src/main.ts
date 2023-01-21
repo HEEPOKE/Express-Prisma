@@ -1,6 +1,7 @@
 import express from 'express';
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client'
+import * as dotenv from 'dotenv'
 
 const prisma = new PrismaClient()
 
