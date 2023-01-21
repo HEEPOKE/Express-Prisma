@@ -31,12 +31,12 @@ model User {
 
 model Product {
   id          Int      @id @default(autoincrement())
-  name       String   @db.VarChar(255)
+  name        String   @db.VarChar(255)
   description String?  @db.VarChar(255)
   price       Int
   userId      Int
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [userId], references: [id])
 
   @@map("products")
