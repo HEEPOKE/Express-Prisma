@@ -1,9 +1,6 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
 import config from "./config/config";
 import router from "./routes";
-
-const prisma = new PrismaClient();
 
 const app = express();
 
