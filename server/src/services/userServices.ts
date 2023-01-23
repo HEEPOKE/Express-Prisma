@@ -31,6 +31,21 @@ async function deleteUser(id: number) {
   });
 }
 
-const userServices = { listUser, getUserById, createUser, updateUser, deleteUser };
+async function findEmail(email: string) {
+  return await db.user.findFirst({
+    where: {
+      email: email,
+    },
+  });
+}
+
+const userServices = {
+  listUser,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+  findEmail,
+};
 
 export default userServices;

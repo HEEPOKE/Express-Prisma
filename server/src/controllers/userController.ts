@@ -51,24 +51,33 @@ async function getUserById(req: Request, res: Response) {
 
 async function createUser(req: Request, res: Response) {
   try {
-    let saltRounds = 10;
-    const hashPassword = await bcrypt.hash(req.body.password, saltRounds);
+    const findEmail = await userServices.findEmail(req.body.email);
 
-    let payload = {
-      email: req.body.email,
-      password: hashPassword,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-    };
+    if (!findEmail) {
+      let saltRounds = 10;
+      const hashPassword = await bcrypt.hash(req.body.password, saltRounds);
 
-    const user = await userServices.createUser(payload);
+      let payload = {
+        email: req.body.email,
+        password: hashPassword,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+      };
 
-    let response = {
-      message: "Success",
-      payload: user,
-    };
+      const user = await userServices.createUser(payload);
 
-    return res.status(201).json(response);
+      let response = {
+        message: "Success",
+        payload: user,
+      };
+
+      return res.status(201).json(response);
+    } else {
+      let message = {
+        message: "อีเมล์นี้มีผู้ใช้สมัครแล้ว",
+      };
+      return res.status(500).json(message);
+    }
   } catch (err: any) {
     let response = {
       message: err,
