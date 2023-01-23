@@ -11,7 +11,7 @@ async function listUser(res: Response) {
     };
 
     return res.json(response);
-  } catch (error: any) {
+  } catch (err: any) {
     let response = {
       message: "Failed to get user",
     };
@@ -39,7 +39,7 @@ async function getUserById(req: Request, res: Response) {
     };
 
     return res.json(response);
-  } catch (error: any) {
+  } catch (err: any) {
     let response = {
       message: "Failed to get user",
     };
@@ -59,7 +59,10 @@ async function createUser(req: Request, res: Response) {
 
     return res.json(response);
   } catch (err: any) {
-    return res.json(err);
+    let response = {
+      message: "Failed",
+    };
+    return res.json(response);
   }
 }
 
