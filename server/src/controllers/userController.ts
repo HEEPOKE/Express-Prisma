@@ -48,6 +48,21 @@ async function getUserById(req: Request, res: Response) {
   }
 }
 
-const controllers = { listUser, getUserById };
+async function createUser(req: Request, res: Response) {
+  try {
+    const user = await userServices.createUser(req.body);
+
+    let response = {
+      message: "Success",
+      payload: user,
+    };
+
+    return res.json(response);
+  } catch (err: any) {
+    return res.json(err);
+  }
+}
+
+const controllers = { listUser, getUserById, createUser };
 
 export default controllers;

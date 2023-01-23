@@ -12,6 +12,12 @@ async function getUserById(id: number) {
   });
 }
 
-const userServices = { listUser, getUserById };
+async function createUser(payload: any) {
+  return await db.user.create({
+    data: payload,
+  });
+}
+
+const userServices = { listUser, getUserById, createUser };
 
 export default userServices;
