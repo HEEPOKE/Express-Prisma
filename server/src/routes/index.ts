@@ -1,23 +1,28 @@
 import express from "express";
 import { Request, Response } from "express";
-import controllers from "../controllers/userController";
+import authController from "../controllers/auth/authController";
+import userController from "../controllers/userController";
 
 const router = express.Router();
 
+router.post("/auth/login", (req: Request, res: Response) => {
+  authController.login(req, res);
+});
+
 router.get("/users/list", (_, res: Response) => {
-  controllers.listUser(res);
+  userController.listUser(res);
 });
 router.get("/users/get/:id", (req: Request, res: Response) => {
-  controllers.getUserById(req, res);
+  userController.getUserById(req, res);
 });
 router.post("/user/create", (req: Request, res: Response) => {
-  controllers.createUser(req, res);
+  userController.createUser(req, res);
 });
 router.put("/user/update/:id", (req: Request, res: Response) => {
-  controllers.updateUser(req, res);
+  userController.updateUser(req, res);
 });
 router.delete("/user/delete/:id", (req: Request, res: Response) => {
-  controllers.deleteUser(req, res);
+  userController.deleteUser(req, res);
 });
 
 export default router;

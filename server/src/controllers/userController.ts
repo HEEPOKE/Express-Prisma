@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
 import userServices from "../services/userServices";
 
 async function listUser(res: Response) {
@@ -139,7 +139,7 @@ async function deleteUser(req: Request, res: Response) {
   }
 }
 
-const controllers = {
+const userController = {
   listUser,
   getUserById,
   createUser,
@@ -147,4 +147,4 @@ const controllers = {
   deleteUser,
 };
 
-export default controllers;
+export default userController;
