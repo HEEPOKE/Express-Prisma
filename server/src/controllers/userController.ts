@@ -20,6 +20,25 @@ async function listUser(res: Response) {
   }
 }
 
-const controllers = { listUser };
+async function getUserById(id: number, res: Response) {
+  try {
+    const user = await userServices.getUserById(id);
+
+    let response = {
+      message: "Success",
+      payload: user,
+    };
+
+    return res.json(response);
+  } catch (error: any) {
+    let response = {
+      message: "Failed to get user",
+    };
+
+    return res.json(response);
+  }
+}
+
+const controllers = { listUser, getUserById };
 
 export default controllers;
