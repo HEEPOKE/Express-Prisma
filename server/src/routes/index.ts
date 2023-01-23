@@ -8,6 +8,9 @@ const router = express.Router();
 router.post("/auth/login", (req: Request, res: Response) => {
   authController.login(req, res);
 });
+router.post("/auth/register", (req: Request, res: Response) => {
+  authController.register(req, res);
+});
 
 router.get("/users/list", (_, res: Response) => {
   userController.listUser(res);

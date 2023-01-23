@@ -32,6 +32,6 @@ async function register(payload: any) {
   });
 }
 
-const loginServices = { login, register };
+const authServices = { login, register };
 
-export default loginServices;
+export default authServices;

@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import config from "../../config/config";
-import loginServices from "../../services/auth/authServices";
+import { hashPassword } from "../../common/hashPassword";
+import authServices from "../../services/auth/authServices";
 
 async function login(req: Request, res: Response) {
   try {
-    await loginServices.login(req.body.email, req.body.password, res);
+    await authServices.login(req.body.email, req.body.password, res);
     return;
   } catch (err: any) {
     let response = {
@@ -16,8 +17,16 @@ async function login(req: Request, res: Response) {
 
 async function register(req: Request, res: Response) {
   try {
-    await loginServices.login(req.body.email, req.body.password, res);
-    return;
+    const password = await hashPassword(req.body.password);
+
+    let payload = {
+      email: req.body.email,
+      password: password,
+    };
+
+    await authServices.register(payload);
+
+    return await authServices.login(req.body.email, req.body.password, res);
   } catch (err: any) {
     let response = {
       message: "Register Fail",
