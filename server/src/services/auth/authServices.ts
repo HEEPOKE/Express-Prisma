@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import db from "../../config/db";
 import { comparePassword } from "../../common/comparePassword";
 import userServices from "../userServices";
+import config from "../../config/config";
 
 async function login(email: string, password: string, res: Response) {
   const checkEmail = await userServices.findEmail(email);
@@ -21,6 +22,8 @@ async function login(email: string, password: string, res: Response) {
     };
     return res.status(401).json(massage);
   }
+
+  return res.redirect(`${config.ENDPOINT}`);
 }
 
 const loginServices = { login };
