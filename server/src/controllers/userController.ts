@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import bcrypt from "bcrypt";
 import userServices from "../services/userServices";
 
 async function listUser(res: Response) {
@@ -50,7 +51,17 @@ async function getUserById(req: Request, res: Response) {
 
 async function createUser(req: Request, res: Response) {
   try {
-    const user = await userServices.createUser(req.body);
+    let saltRounds = 10;
+    const hashPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+    let payload = {
+      email: req.body.email,
+      password: hashPassword,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+    };
+
+    const user = await userServices.createUser(payload);
 
     let response = {
       message: "Success",
@@ -119,6 +130,12 @@ async function deleteUser(req: Request, res: Response) {
   }
 }
 
-const controllers = { listUser, getUserById, createUser, updateUser, deleteUser };
+const controllers = {
+  listUser,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+};
 
 export default controllers;
