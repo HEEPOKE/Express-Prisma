@@ -7,5 +7,8 @@ const router = express.Router();
 router.get("/users/list", (_, res: Response) => {
   controllers.listUser(res);
 });
+router.get("/users/get/:id", (req: Request, res: Response) => {
+  controllers.getUserById(req, res);
+});
 
 export default router;

@@ -20,8 +20,9 @@ async function listUser(res: Response) {
   }
 }
 
-async function getUserById(id: number, res: Response) {
+async function getUserById(req: Request, res: Response) {
   try {
+    const id = Number(req.params.id);
     const user = await userServices.getUserById(id);
 
     let response = {
