@@ -4,9 +4,19 @@ import userServices from "../services/userServices";
 async function listUser(res: Response) {
   try {
     const user = await userServices.listUser();
-    return res.json(user);
+
+    let response = {
+      message: "Success",
+      payload: user,
+    };
+
+    return res.json(response);
   } catch (error: any) {
-    return res.json({ message: "Failed to get user" });
+    let response = {
+      message: "Failed to get user",
+    };
+
+    return res.json(response);
   }
 }
 
