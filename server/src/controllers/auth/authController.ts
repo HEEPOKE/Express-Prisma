@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import config from "../../config/config";
 import { hashPassword } from "../../common/hashPassword";
 import authServices from "../../services/auth/authServices";
 
@@ -17,11 +16,11 @@ async function login(req: Request, res: Response) {
 
 async function register(req: Request, res: Response) {
   try {
-    const password = await hashPassword(req.body.password);
+    const hashedPassword = await hashPassword(req.body.password);
 
     let payload = {
       email: req.body.email,
-      password: password,
+      password: hashedPassword,
     };
 
     await authServices.register(payload);
