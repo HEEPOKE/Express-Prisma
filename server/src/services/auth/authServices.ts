@@ -26,6 +26,12 @@ async function login(email: string, password: string, res: Response) {
   return res.redirect(`${config.ENDPOINT}`);
 }
 
-const loginServices = { login };
+async function register(payload: any) {
+  return await db.user.create({
+    data: payload,
+  });
+}
+
+const loginServices = { login, register };
 
 export default loginServices;

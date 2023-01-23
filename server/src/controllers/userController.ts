@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as bcrypt from "bcrypt";
+import { hashPassword } from "../common/hashPassword"
 import userServices from "../services/userServices";
 
 async function listUser(res: Response) {
@@ -54,12 +54,11 @@ async function createUser(req: Request, res: Response) {
     const findEmail = await userServices.findEmail(req.body.email);
 
     if (!findEmail) {
-      let saltRounds = 10;
-      const hashPassword = await bcrypt.hash(req.body.password, saltRounds);
+      const password = await hashPassword(req.body.password);
 
       let payload = {
         email: req.body.email,
-        password: hashPassword,
+        password: password,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
       };
