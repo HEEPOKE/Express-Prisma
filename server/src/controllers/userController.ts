@@ -22,7 +22,15 @@ async function listUser(res: Response) {
 
 async function getUserById(req: Request, res: Response) {
   try {
-    const id = Number(req.params.id);
+    const id = Number(req.params.id) ?? false;
+
+    if (!id) {
+      let ErrMessage = {
+        message: "id required",
+      };
+      return res.json(ErrMessage);
+    }
+
     const user = await userServices.getUserById(id);
 
     let response = {
