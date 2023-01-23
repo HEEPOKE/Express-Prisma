@@ -13,5 +13,8 @@ router.get("/users/get/:id", (req: Request, res: Response) => {
 router.post("/user/create", (req: Request, res: Response) => {
   controllers.createUser(req, res);
 });
+router.put("/user/update/:id", (req: Request, res: Response) => {
+  controllers.updateUser(req, res);
+});
 
 export default router;

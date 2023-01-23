@@ -18,6 +18,13 @@ async function createUser(payload: any) {
   });
 }
 
-const userServices = { listUser, getUserById, createUser };
+async function updateUser(id: number, payload: any) {
+  return await db.user.update({
+    where: { id },
+    data: payload,
+  });
+}
+
+const userServices = { listUser, getUserById, createUser, updateUser };
 
 export default userServices;

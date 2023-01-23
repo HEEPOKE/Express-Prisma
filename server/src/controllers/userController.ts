@@ -66,6 +66,33 @@ async function createUser(req: Request, res: Response) {
   }
 }
 
-const controllers = { listUser, getUserById, createUser };
+async function updateUser(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id) ?? false;
+
+    if (!id) {
+      let ErrMessage = {
+        message: "id required",
+      };
+      return res.json(ErrMessage);
+    }
+
+    const user = await userServices.updateUser(id, req.body);
+
+    let response = {
+      message: "Success",
+      payload: user,
+    };
+
+    return res.json(response);
+  } catch (err: any) {
+    let response = {
+      message: "Failed",
+    };
+    return res.json(response);
+  }
+}
+
+const controllers = { listUser, getUserById, createUser, updateUser };
 
 export default controllers;
