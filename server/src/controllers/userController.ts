@@ -11,13 +11,13 @@ async function listUser(res: Response) {
       payload: user,
     };
 
-    return res.json(response);
+    return res.status(200).json(response);
   } catch (err: any) {
     let response = {
       message: "Failed to get user",
     };
 
-    return res.json(response);
+    return res.status(500).json(response);
   }
 }
 
@@ -39,13 +39,13 @@ async function getUserById(req: Request, res: Response) {
       payload: user,
     };
 
-    return res.json(response);
+    return res.status(200).json(response);
   } catch (err: any) {
     let response = {
       message: "Failed to get user",
     };
 
-    return res.json(response);
+    return res.status(500).json(response);
   }
 }
 
@@ -68,12 +68,12 @@ async function createUser(req: Request, res: Response) {
       payload: user,
     };
 
-    return res.json(response);
+    return res.status(201).json(response);
   } catch (err: any) {
     let response = {
-      message: "Failed",
+      message: err,
     };
-    return res.json(response);
+    return res.status(500).json(response);
   }
 }
 
@@ -95,12 +95,12 @@ async function updateUser(req: Request, res: Response) {
       payload: user,
     };
 
-    return res.json(response);
+    return res.status(200).json(response);
   } catch (err: any) {
     let response = {
       message: "Failed",
     };
-    return res.json(response);
+    return res.status(500).json(response);
   }
 }
 
@@ -121,12 +121,12 @@ async function deleteUser(req: Request, res: Response) {
       message: "Success",
     };
 
-    return res.json(response);
+    return res.status(200).json(response);
   } catch (err: any) {
     let response = {
       message: "Failed",
     };
-    return res.json(response);
+    return res.status(500).json(response);
   }
 }
 
