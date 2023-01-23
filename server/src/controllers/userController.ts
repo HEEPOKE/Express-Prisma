@@ -1,4 +1,4 @@
-import type { Request, Response } from "express";
+import { Request, Response } from "express";
 import userServices from "../services/userServices";
 
 async function listUser(res: Response) {
