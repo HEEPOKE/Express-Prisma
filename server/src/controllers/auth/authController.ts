@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import config from "src/config/config";
-import loginServices from "src/services/auth/authServices";
+import config from "../../config/config";
+import loginServices from "../../services/auth/authServices";
 
 async function login(req: Request, res: Response) {
   try {

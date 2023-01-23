@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import db from "../../config/db";
-import { comparePassword } from "src/common/comparePassword";
+import { comparePassword } from "../../common/comparePassword";
 import userServices from "../userServices";
 
 async function login(email: string, password: string, res: Response) {
