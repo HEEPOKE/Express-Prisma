@@ -13,7 +13,3 @@ if (!global.__db) {
 db = global.__db;
 
 export default db;
-
-// const prisma = new PrismaClient()
-
-// export default prisma
