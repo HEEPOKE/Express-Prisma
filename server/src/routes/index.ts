@@ -1,10 +1,8 @@
 import express from "express";
-import { Request, Response } from "express";
+import controllers from "../controllers/userController";
 
 const router = express.Router();
 
-router.get("/a", (req: Request, res: Response) => {
-    res.send("Application works!");
-  });
+router.get("/users/list", controllers.listUser);
 
 export default router;
