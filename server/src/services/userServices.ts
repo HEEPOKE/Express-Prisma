@@ -25,6 +25,12 @@ async function updateUser(id: number, payload: any) {
   });
 }
 
-const userServices = { listUser, getUserById, createUser, updateUser };
+async function deleteUser(id: number) {
+  return await db.user.delete({
+    where: { id },
+  });
+}
+
+const userServices = { listUser, getUserById, createUser, updateUser, deleteUser };
 
 export default userServices;

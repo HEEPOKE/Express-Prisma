@@ -93,6 +93,32 @@ async function updateUser(req: Request, res: Response) {
   }
 }
 
-const controllers = { listUser, getUserById, createUser, updateUser };
+async function deleteUser(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id) ?? false;
+
+    if (!id) {
+      let ErrMessage = {
+        message: "id required",
+      };
+      return res.json(ErrMessage);
+    }
+
+    await userServices.deleteUser(id);
+
+    let response = {
+      message: "Success",
+    };
+
+    return res.json(response);
+  } catch (err: any) {
+    let response = {
+      message: "Failed",
+    };
+    return res.json(response);
+  }
+}
+
+const controllers = { listUser, getUserById, createUser, updateUser, deleteUser };
 
 export default controllers;

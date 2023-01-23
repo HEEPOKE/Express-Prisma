@@ -16,5 +16,8 @@ router.post("/user/create", (req: Request, res: Response) => {
 router.put("/user/update/:id", (req: Request, res: Response) => {
   controllers.updateUser(req, res);
 });
+router.delete("/user/delete/:id", (req: Request, res: Response) => {
+  controllers.deleteUser(req, res);
+});
 
 export default router;
