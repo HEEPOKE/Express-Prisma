@@ -4,7 +4,7 @@ import controllers from "../controllers/userController";
 
 const router = express.Router();
 
-router.get("/users/list", (res: Response) => {
+router.get("/users/list", (_, res: Response) => {
   controllers.listUser(res);
 });
 
