@@ -106,7 +106,7 @@ async function updateUser(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (err: any) {
     let response = {
-      message: "Failed",
+      message: "Update User Failed",
     };
     return res.status(500).json(response);
   }
@@ -118,7 +118,7 @@ async function deleteUser(req: Request, res: Response) {
 
     if (!id) {
       let ErrMessage = {
-        message: "id required",
+        message: "Id required",
       };
       return res.json(ErrMessage);
     }
@@ -132,7 +132,7 @@ async function deleteUser(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (err: any) {
     let response = {
-      message: "Failed",
+      message: "Delete Failed",
     };
     return res.status(500).json(response);
   }
