@@ -1,5 +1,4 @@
 import express from "express";
-import { Request, Response } from "express";
 import authenticateToken from "../middleware/validationMiddleware";
 import authController from "../controllers/auth/authController";
 import userController from "../controllers/userController";
