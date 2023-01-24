@@ -1,7 +1,17 @@
 import db from "../config/db";
 
 async function listUser() {
-  return await db.user.findMany();
+  return await db.user.findMany({
+    select: {
+      id: true,
+      email: true,
+      firstName: true,
+      lastName: true,
+      role: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
 }
 
 async function getUserById(id: number) {

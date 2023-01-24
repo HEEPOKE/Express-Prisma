@@ -1,5 +1,4 @@
-import { hashPassword } from "./../../common/hashPassword";
-import { Request, Response } from "express";
+import { Response } from "express";
 import jwt from "jsonwebtoken";
 import db from "../../config/db";
 import config from "../../config/config";
