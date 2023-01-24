@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { hashPassword } from "../common/hashPassword"
 import userServices from "../services/userServices";
 
-async function listUser(res: Response) {
+async function listUser(req: Request,res: Response) {
   try {
     const user = await userServices.listUser();
 

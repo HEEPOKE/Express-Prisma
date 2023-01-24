@@ -2,11 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
 
-interface AuthRequest extends Request {
-  user: any;
-}
-
-function authToken(req: AuthRequest, res: Response, next: NextFunction) {
+function authenticateToken(req: any, res: Response, next: NextFunction) {
   const authHeader = req.headers["authorization"];
   if (!authHeader) {
     return res.status(500).json({ message: "Invalid Token" });
@@ -17,12 +13,12 @@ function authToken(req: AuthRequest, res: Response, next: NextFunction) {
   }
 
   try {
-    const user = jwt.verify(token, `${config.MY_SECRET_KEY}`);
-    req.user = user;
-    next();
+    const decoded = jwt.verify(token, `${config.MY_SECRET_KEY}`);
+    req.user = decoded;
+    return next();
   } catch (err) {
-    return res.sendStatus(403);
+    return res.sendStatus(403).json({ message: "Token Not Correct" });
   }
 }
 
-export default authToken;
+export default authenticateToken;

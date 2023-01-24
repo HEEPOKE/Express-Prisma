@@ -1,5 +1,6 @@
 import express from "express";
 import { Request, Response } from "express";
+import authenticateToken from "../middleware/validationMiddleware";
 import authController from "../controllers/auth/authController";
 import userController from "../controllers/userController";
 
@@ -12,9 +13,7 @@ router.post("/auth/register", (req: Request, res: Response) => {
   authController.register(req, res);
 });
 
-router.get("/users/list", (_, res: Response) => {
-  userController.listUser(res);
-});
+router.get("/users/list", authenticateToken, userController.listUser);
 router.get("/users/get/:id", (req: Request, res: Response) => {
   userController.getUserById(req, res);
 });

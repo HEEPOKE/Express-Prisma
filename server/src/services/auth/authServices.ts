@@ -40,7 +40,7 @@ async function login(email: string, password: string, res: Response) {
   const payload = {
     message: "Success",
     payload: user,
-    token: token,
+    token: "Bearer " + token,
   };
 
   return res.status(200).json(payload);
