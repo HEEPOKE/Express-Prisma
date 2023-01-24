@@ -33,7 +33,8 @@ async function login(email: string, password: string, res: Response) {
       lastName: user.lastName,
       role: user.role,
     },
-    `${config.MY_SECRET_KEY}`
+    `${config.MY_SECRET_KEY}`,
+    { expiresIn: 60 * 60 }
   );
 
   const payload = {
