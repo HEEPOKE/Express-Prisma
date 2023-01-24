@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "ts-node ./src/main.ts",
-    "start:dev": "./node_modules/nodemon/bin/nodemon.js",
+    "dev": "./node_modules/nodemon/bin/nodemon.js",
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
