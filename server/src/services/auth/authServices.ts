@@ -1,20 +1,22 @@
+import { hashPassword } from "./../../common/hashPassword";
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import db from "../../config/db";
+import config from "../../config/config";
 import { comparePassword } from "../../common/comparePassword";
 import userServices from "../userServices";
-import config from "../../config/config";
 
 async function login(email: string, password: string, res: Response) {
-  const checkEmail = await userServices.findEmail(email);
+  const user = await userServices.findEmail(email);
 
-  if (!checkEmail) {
+  if (!user) {
     let massage = {
       message: "Invalid email",
     };
     return res.status(401).json(massage);
   }
 
-  const checkPassword = await comparePassword(checkEmail.password, password);
+  const checkPassword = await comparePassword(user.password, password);
 
   if (!checkPassword) {
     let massage = {
@@ -23,7 +25,24 @@ async function login(email: string, password: string, res: Response) {
     return res.status(401).json(massage);
   }
 
-  return res.redirect(`${config.ENDPOINT}`);
+  const token = await jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    },
+    `${config.MY_SECRET_KEY}`
+  );
+
+  const payload = {
+    message: "Success",
+    payload: user,
+    token: token,
+  };
+
+  return res.status(200).json(payload);
 }
 
 async function register(payload: any) {
