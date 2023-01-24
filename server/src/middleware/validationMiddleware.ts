@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
 
@@ -7,7 +7,7 @@ function authenticateToken(req: any, res: Response, next: NextFunction) {
   if (!authHeader) {
     return res.status(500).json({ message: "Invalid Token" });
   }
-  const token = authHeader && authHeader.split(" ")[1];
+  const token = authHeader.split(" ")[1];
   if (!token) {
     return res.status(500).json({ message: "Invalid Token" });
   }

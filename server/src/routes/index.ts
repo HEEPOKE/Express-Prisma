@@ -6,25 +6,13 @@ import userController from "../controllers/userController";
 
 const router = express.Router();
 
-router.post("/auth/login", (req: Request, res: Response) => {
-  authController.login(req, res);
-});
-router.post("/auth/register", (req: Request, res: Response) => {
-  authController.register(req, res);
-});
+router.post("/auth/login", authController.login);
+router.post("/auth/register", authController.register);
 
 router.get("/users/list", authenticateToken, userController.listUser);
-router.get("/users/get/:id", (req: Request, res: Response) => {
-  userController.getUserById(req, res);
-});
-router.post("/user/create", (req: Request, res: Response) => {
-  userController.createUser(req, res);
-});
-router.put("/user/update/:id", (req: Request, res: Response) => {
-  userController.updateUser(req, res);
-});
-router.delete("/user/delete/:id", (req: Request, res: Response) => {
-  userController.deleteUser(req, res);
-});
+router.get("/users/get/:id", authenticateToken, userController.getUserById);
+router.post("/user/create", authenticateToken, userController.createUser);
+router.put("/user/update/:id", authenticateToken, userController.updateUser);
+router.delete("/user/delete/:id", authenticateToken, userController.deleteUser);
 
 export default router;
