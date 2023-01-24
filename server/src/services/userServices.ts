@@ -30,14 +30,14 @@ async function createUser(payload: any) {
 
 async function updateUser(id: number, payload: any) {
   return await db.user.update({
-    where: { id },
+    where: { id: id },
     data: payload,
   });
 }
 
 async function deleteUser(id: number) {
   return await db.user.delete({
-    where: { id },
+    where: { id: id },
   });
 }
 
