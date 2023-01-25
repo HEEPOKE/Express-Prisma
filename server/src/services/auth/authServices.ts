@@ -42,7 +42,8 @@ async function login(email: string, password: string, res: Response) {
     access_token: "Bearer " + token,
   };
 
-  return res.redirect(`${config.ENDPOINT}/`);
+  // return res.redirect(`${config.ENDPOINT}/`);
+  return res.status(200).json(payload);
 }
 
 async function register(payload: any) {
