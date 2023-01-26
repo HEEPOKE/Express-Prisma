@@ -19,6 +19,8 @@ async function register(req: Request, res: Response) {
     const hashedPassword = await hashPassword(req.body.password);
 
     let payload = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       email: req.body.email,
       password: hashedPassword,
     };

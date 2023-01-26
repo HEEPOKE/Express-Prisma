@@ -33,7 +33,7 @@ async function login(email: string, password: string, res: Response) {
       role: user.role,
     },
     `${config.MY_SECRET_KEY}`,
-    { expiresIn: 60 * 60 }
+    { expiresIn: "1h" }
   );
 
   const payload = {
@@ -42,7 +42,6 @@ async function login(email: string, password: string, res: Response) {
     access_token: "Bearer " + token,
   };
 
-  // return res.redirect(`${config.ENDPOINT}/`);
   return res.status(200).json(payload);
 }
 
