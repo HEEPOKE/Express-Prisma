@@ -3,17 +3,18 @@ import jwt from "jsonwebtoken";
 import config from "../config/config";
 
 function authenticateToken(req: any, res: Response, next: NextFunction) {
-  const authHeader = req.headers["authorization"];
-  if (!authHeader) {
-    return res.status(500).json({ message: "Invalid Token" });
-  }
-  const token = authHeader.split(" ")[1];
+  const token = req.headers.authorization ?? false;
+
   if (!token) {
-    return res.status(500).json({ message: "Invalid Token" });
+    return res.status(500).json({ message: "Invalid Token form header" });
+  }
+  const tokenSplit = token.split(" ")[1];
+  if (!tokenSplit) {
+    return res.status(500).json({ message: "Invalid Token split form header" });
   }
 
   try {
-    const decoded = jwt.verify(token, `${config.MY_SECRET_KEY}`);
+    const decoded = jwt.verify(tokenSplit, `${config.MY_SECRET_KEY}`);
     req.user = decoded;
     return next();
   } catch (err) {

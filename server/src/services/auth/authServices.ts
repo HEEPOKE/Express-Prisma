@@ -39,7 +39,7 @@ async function login(email: string, password: string, res: Response) {
   const payload = {
     message: "Success",
     payload: user,
-    access_token: "Bearer " + token,
+    Authorization: "Bearer " + token,
   };
 
   return res.status(200).json(payload);
