@@ -8,8 +8,6 @@ async function listUser() {
       firstName: true,
       lastName: true,
       role: true,
-      createdAt: true,
-      updatedAt: true,
     },
   });
 }
