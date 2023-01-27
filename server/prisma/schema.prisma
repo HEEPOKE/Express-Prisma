@@ -22,7 +22,7 @@ model User {
   firstName String?   @db.VarChar(255)
   lastName  String?   @db.VarChar(255)
   role      Role      @default(USER)
-  refresh   String
+  refresh   String?    @db.VarChar(255)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[]
