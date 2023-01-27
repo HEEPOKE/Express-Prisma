@@ -36,6 +36,18 @@ async function register(req: Request, res: Response) {
   }
 }
 
-const authController = { login, register };
+async function refreshToken(req: Request, res: Response) {
+  const user = {
+    id: req.body.id,
+    email: req.body.email,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    role: req.body.role,
+  };
+
+  return await authServices.refreshToken(user, res);
+}
+
+const authController = { login, register, refreshToken };
 
 export default authController;
