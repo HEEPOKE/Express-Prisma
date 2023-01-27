@@ -51,6 +51,10 @@ async function register(payload: any) {
   });
 }
 
-const authServices = { login, register };
+async function refreshToken() {
+  
+}
+
+const authServices = { login, register, refreshToken };
 
 export default authServices;

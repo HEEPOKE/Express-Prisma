@@ -11,6 +11,7 @@ const {
   DB_PASSWORD,
   ENDPOINT,
   MY_SECRET_KEY,
+  MY_REFRESH_KEY,
 } = process.env;
 
 const config = {
@@ -22,6 +23,7 @@ const config = {
   DB_PASSWORD,
   ENDPOINT,
   MY_SECRET_KEY,
+  MY_REFRESH_KEY,
 };
 
 export default config;

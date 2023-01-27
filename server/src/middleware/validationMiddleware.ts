@@ -1,4 +1,4 @@
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
 
@@ -21,5 +21,29 @@ function authenticateToken(req: any, res: Response, next: NextFunction) {
     return res.sendStatus(403).json({ message: "Token Not Correct" });
   }
 }
+
+const RefreshTokenValidate = (req: any, res: Response, next: NextFunction) => {
+  try {
+    const getToken = req.headers.authorization ?? false;
+
+    if (!getToken) {
+      return res.status(500).json({ message: "Invalid Token form header" });
+    }
+
+    const token = getToken.split(" ")[1];
+
+    jwt.verify(token, `${config.MY_REFRESH_KEY}`, (err: any, decoded: any) => {
+      if (err) throw new Error(err);
+
+      req.user = decoded;
+      req.user.token = token;
+      delete req.user.exp;
+      delete req.user.iat;
+    });
+    next();
+  } catch (error) {
+    return res.sendStatus(403).json({ message: "Token Not Correct" });
+  }
+};
 
 export default authenticateToken;
