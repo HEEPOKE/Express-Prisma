@@ -119,15 +119,19 @@ async function refreshToken(user: any, res: Response) {
       `${config.MY_REFRESH_KEY}`,
       "1d"
     );
+    const tokenExp = await decodedToken(access_token);
 
     if (refresh_token) {
       await updateRefreshToken(user.id, refresh_token);
     }
 
-    return res.json({
-      access_token,
-      refresh_token,
-    });
+    let payload = {
+      Authorization: access_token,
+      Refresh_Token: refresh_token,
+      Token_Exp: tokenExp,
+    };
+
+    return res.status(200).json({ payload: payload });
   } catch (err: any) {
     return res.status(500).json({ message: "error" });
   }
