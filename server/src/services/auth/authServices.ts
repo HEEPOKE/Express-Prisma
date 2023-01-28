@@ -85,6 +85,7 @@ async function login(email: string, password: string, res: Response) {
     payload: user,
     Authorization: "Bearer " + access_token,
     Refresh_token: refresh_token,
+    token_exp: "",
   };
 
   return res.status(200).json(payload);
