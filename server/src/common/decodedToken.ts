@@ -8,3 +8,5 @@ const decodedToken = (token: string) => {
 
   return tokenExp;
 };
+
+export default decodedToken;

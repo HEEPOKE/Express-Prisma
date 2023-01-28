@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import db from "../../config/db";
 import config from "../../config/config";
 import { comparePassword } from "../../common/comparePassword";
+import decodedToken from "../../common/decodedToken";
 import userServices from "../userServices";
 
 async function checkLogin(email: string, password: string) {
@@ -75,6 +76,7 @@ async function login(email: string, password: string, res: Response) {
     `${config.MY_REFRESH_KEY}`,
     "1d"
   );
+  const tokenExp = await decodedToken(access_token);
 
   if (refresh_token) {
     await updateRefreshToken(user.id, refresh_token);
@@ -85,7 +87,7 @@ async function login(email: string, password: string, res: Response) {
     payload: user,
     Authorization: "Bearer " + access_token,
     Refresh_token: refresh_token,
-    token_exp: "",
+    token_exp: tokenExp,
   };
 
   return res.status(200).json(payload);
