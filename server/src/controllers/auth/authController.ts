@@ -50,7 +50,8 @@ async function refreshToken(req: Request, res: Response) {
 
 async function logout(req: Request, res: Response) {
   try {
-    return await authServices.logout(req, res);
+    const token = req.headers.authorization as string;
+    return await authServices.logout(token, res);
   } catch (err: any) {
     return res.status(500).json({ message: "Logout Fail" });
   }

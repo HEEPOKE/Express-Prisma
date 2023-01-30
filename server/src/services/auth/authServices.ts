@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import db from "../../config/db";
 import config from "../../config/config";
@@ -137,21 +137,20 @@ async function refreshToken(user: any, res: Response) {
   }
 }
 
-async function logout(req: any, res: Response) {
+async function logout(token: string, res: Response) {
   try {
-    const decoded = jwt.verify(
-      req.headers.authorization,
-      `${config.MY_SECRET_KEY}`
-    );
-
-    req.session.jwt = null;
-
-    return res.status(200).json({ message: "Successfully logged out" });
-  } catch (err: any) {
+  } catch (err) {
     return res.status(500).json({ message: "Logout Error" });
   }
 }
 
-const authServices = { login, register, checkLogin, createToken, refreshToken, logout };
+const authServices = {
+  login,
+  register,
+  checkLogin,
+  createToken,
+  refreshToken,
+  logout,
+};
 
 export default authServices;
