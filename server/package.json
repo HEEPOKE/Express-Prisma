@@ -7,7 +7,7 @@
     "start": "ts-node ./src/main.ts",
     "dev": "./node_modules/nodemon/bin/nodemon.js",
     "build": "npx tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",
