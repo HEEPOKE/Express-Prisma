@@ -1,54 +1,43 @@
 import supertest from "supertest";
 import server from "../server";
 import config from "../config/config";
-import db from "../config/db";
 
 const app = server();
 
-beforeEach(async () => {
-  return await db.user.create({
-    data: {
-      email: `${config.EMAIL}`,
-      password: `${config.PASSWORD}`,
-    },
-  });
-});
+let token: string;
 
-afterEach(async () => {
-  await db.user.deleteMany();
-});
-
-describe("users", () => {
-  it("should return a list of users", async () => {
-    const loginResponse = await supertest(app)
-      .post("/api/auth/login")
+describe("Login", () => {
+  it("should return a 200 and successful login", async () => {
+    const response = await supertest(app)
+      .post("/api/auth/register")
       .send({
         email: `${config.EMAIL}`,
         password: `${config.PASSWORD}`,
       });
 
-    const token = loginResponse.body.Authorization;
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("message", "Success");
 
+    token = response.body.Authorization;
+  });
+});
+
+describe("List Users", () => {
+  it("should return a list of users", async () => {
     const response = await supertest(app)
       .get("/api/users/list")
-      .set("Authorization", token);
+      .set("Authorization", `${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("message", "Success");
   });
+});
 
+describe("create User", () => {
   it("should return a 201 and create a user", async () => {
-    const loginResponse = await supertest(app)
-      .post("/api/auth/login")
-      .send({
-        email: `${config.EMAIL}`,
-        password: `${config.PASSWORD}`,
-      });
-    const token = loginResponse.body.Authorization;
-
     const response = await supertest(app)
       .post("/api/user/create")
-      .set("Authorization", token)
+      .set("Authorization", `${token}`)
       .send({
         email: "johndoe@example.com",
         password: "yoyo5555",
@@ -59,19 +48,13 @@ describe("users", () => {
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("message", "Success");
   });
+});
 
+describe("List User By Id", () => {
   it("should return a 200 and get a user", async () => {
-    const loginResponse = await supertest(app)
-      .post("/api/auth/login")
-      .send({
-        email: `${config.EMAIL}`,
-        password: `${config.PASSWORD}`,
-      });
-    const token = loginResponse.body.Authorization;
-
     const createResponse = await supertest(app)
       .post("/api/user/create")
-      .set("Authorization", token)
+      .set("Authorization", `${token}`)
       .send({
         email: "nddnd@example.com",
         password: "yoyo5555",
@@ -82,25 +65,19 @@ describe("users", () => {
     const id = createResponse.body.payload["id"];
 
     const response = await supertest(app)
-      .get(`/api/user/get/114${id}`)
-      .set("Authorization", token);
+      .get(`/api/user/get/${id}`)
+      .set("Authorization", `${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("message", "Success");
   });
+});
 
+describe("update User", () => {
   it("should return a 200 and update a user", async () => {
-    const loginResponse = await supertest(app)
-      .post("/api/auth/login")
-      .send({
-        email: `${config.EMAIL}`,
-        password: `${config.PASSWORD}`,
-      });
-    const token = loginResponse.body.Authorization;
-
     const createResponse = await supertest(app)
       .post("/api/user/create")
-      .set("Authorization", token)
+      .set("Authorization", `${token}`)
       .send({
         email: "cccac@example.com",
         password: "yoyo5555",
@@ -111,8 +88,8 @@ describe("users", () => {
     const id = createResponse.body.payload["id"];
 
     const response = await supertest(app)
-      .put(`/api/user/update/114${id}`)
-      .set("Authorization", token)
+      .put(`/api/user/update/${id}`)
+      .set("Authorization", `${token}`)
       .send({
         firstName: "Jane",
       });
@@ -120,19 +97,25 @@ describe("users", () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("message", "Success");
   });
+});
 
+describe("delete User", () => {
   it("should return a 200 and delete a user", async () => {
-    const loginResponse = await supertest(app)
-      .post("/api/auth/login")
+    const createResponse = await supertest(app)
+      .post("/api/user/create")
+      .set("Authorization", `${token}`)
       .send({
-        email: `${config.EMAIL}`,
-        password: `${config.PASSWORD}`,
+        email: "mnbvcx@example.com",
+        password: "yoyo5555",
+        firstName: "aa",
+        lastName: "daa",
       });
-    const token = loginResponse.body.Authorization;
+
+    const id = createResponse.body.payload["id"];
 
     const response = await supertest(app)
-      .delete("/api/user/delete/114")
-      .set("Authorization", token);
+      .delete(`/api/user/delete/${id}`)
+      .set("Authorization", `${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("message", "Success");
