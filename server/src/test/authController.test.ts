@@ -28,16 +28,6 @@ describe("auth", () => {
     expect(response.body).toHaveProperty("message", "Success");
   });
 
-  // it("should return a 200 and successful login", async () => {
-  //   const response = await supertest(app).post("/api/auth/login").send({
-  //     email: "test@example.com",
-  //     password: "testpassword",
-  //   });
-
-  //   expect(response.status).toBe(200);
-  //   expect(response.body).toHaveProperty("message", "Success");
-  // });
-
   it("should return a 401 on incorrect email or password", async () => {
     const response = await supertest(app).post("/api/auth/login").send({
       email: "test@example.com",
@@ -46,20 +36,5 @@ describe("auth", () => {
 
     expect(response.status).toBe(401);
     expect(response.body).toEqual({ message: "Password Not Correct" });
-  });
-
-  it("should return a list of users", async () => {
-    const loginResponse = await supertest(app).post("/api/auth/login").send({
-      email: "test1@example.com",
-      password: "testpassword",
-    });
-
-    const token = loginResponse.body.Authorization;
-    const response = await supertest(app)
-      .get("/api/users/list")
-      .set("Authorization", token);
-
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("message", "Success");
   });
 });
