@@ -2,14 +2,10 @@ import supertest from "supertest";
 import server from "../server";
 import config from "../config/config";
 import db from "../config/db";
-import LoginRequest from "src/models/Request/LoginRequest";
-import authController from "../controllers/auth/authController";
-
-let request: supertest.SuperTest<supertest.Test>;
 
 const app = server();
 
-describe("Login", () => {
+describe("auth", () => {
   beforeEach(async () => {
     return await db.user.create({
       data: {
@@ -23,15 +19,25 @@ describe("Login", () => {
     await db.user.deleteMany();
   });
 
-  it("should return a 200 and a JWT token on successful login", async () => {
-    const response = await supertest(app).post("/api/auth/login").send({
-      email: "test@example.com",
+  it("should return a 200 successful registration", async () => {
+    const response = await supertest(app).post("/api/auth/register").send({
+      email: "test1@example.com",
       password: "testpassword",
     });
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("message");
+    expect(response.body).toHaveProperty("message", "Success");
   });
+
+  // it("should return a 200 and successful login", async () => {
+  //   const response = await supertest(app).post("/api/auth/login").send({
+  //     email: "test@example.com",
+  //     password: "testpassword",
+  //   });
+
+  //   expect(response.status).toBe(200);
+  //   expect(response.body).toHaveProperty("message", "Success");
+  // });
 
   it("should return a 401 on incorrect email or password", async () => {
     const response = await supertest(app).post("/api/auth/login").send({

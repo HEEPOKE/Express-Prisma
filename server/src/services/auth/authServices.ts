@@ -53,7 +53,6 @@ async function login(email: string, password: string, res: Response) {
   }
 
   const checkPassword = await comparePassword(user.password, password);
-  console.log(checkPassword);
 
   if (!checkPassword) {
     let massage = {
