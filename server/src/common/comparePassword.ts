@@ -1,6 +1,8 @@
 import * as bcrypt from "bcrypt";
 
-export const comparePassword =
-  (dbPassword: string, interfacePassword: string) => () => {
-    bcrypt.compare(dbPassword, interfacePassword);
-  };
+async function comparePassword(dbPassword: string, interfacePassword: string) {
+  const isMatch = await bcrypt.compare(interfacePassword, dbPassword);
+  return isMatch;
+}
+
+export default comparePassword;

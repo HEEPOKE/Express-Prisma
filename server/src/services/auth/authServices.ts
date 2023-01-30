@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import db from "../../config/db";
 import config from "../../config/config";
-import { comparePassword } from "../../common/comparePassword";
+import comparePassword from "../../common/comparePassword";
 import decodedToken from "../../common/decodedToken";
 import userServices from "../userServices";
 
@@ -53,6 +53,7 @@ async function login(email: string, password: string, res: Response) {
   }
 
   const checkPassword = await comparePassword(user.password, password);
+  console.log(checkPassword);
 
   if (!checkPassword) {
     let massage = {
