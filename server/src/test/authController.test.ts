@@ -1,6 +1,5 @@
 import supertest from "supertest";
 import server from "../server";
-import config from "../config/config";
 import db from "../config/db";
 
 const app = server();
@@ -47,5 +46,20 @@ describe("auth", () => {
 
     expect(response.status).toBe(401);
     expect(response.body).toEqual({ message: "Password Not Correct" });
+  });
+
+  it("should return a list of users", async () => {
+    const loginResponse = await supertest(app).post("/api/auth/login").send({
+      email: "test1@example.com",
+      password: "testpassword",
+    });
+
+    const token = loginResponse.body.Authorization;
+    const response = await supertest(app)
+      .get("/api/users/list")
+      .set("Authorization", token);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("message", "Success");
   });
 });
