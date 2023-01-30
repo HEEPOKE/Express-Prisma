@@ -48,6 +48,14 @@ async function refreshToken(req: Request, res: Response) {
   return await authServices.refreshToken(user, res);
 }
 
-const authController = { login, register, refreshToken };
+async function logout(req: Request, res: Response) {
+  try {
+    return await authServices.logout(req, res);
+  } catch (err: any) {
+    return res.status(500).json({ message: "Logout Fail" });
+  }
+}
+
+const authController = { login, register, refreshToken, logout };
 
 export default authController;

@@ -137,6 +137,21 @@ async function refreshToken(user: any, res: Response) {
   }
 }
 
-const authServices = { login, register, checkLogin, createToken, refreshToken };
+async function logout(req: any, res: Response) {
+  try {
+    const decoded = jwt.verify(
+      req.headers.authorization,
+      `${config.MY_SECRET_KEY}`
+    );
+
+    req.session.jwt = null;
+
+    return res.status(200).json({ message: "Successfully logged out" });
+  } catch (err: any) {
+    return res.status(500).json({ message: "Logout Error" });
+  }
+}
+
+const authServices = { login, register, checkLogin, createToken, refreshToken, logout };
 
 export default authServices;
