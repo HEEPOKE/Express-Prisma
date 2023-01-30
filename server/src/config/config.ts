@@ -12,6 +12,8 @@ const {
   ENDPOINT,
   MY_SECRET_KEY,
   MY_REFRESH_KEY,
+  EMAIL,
+  PASSWORD
 } = process.env;
 
 const config = {
@@ -24,6 +26,8 @@ const config = {
   ENDPOINT,
   MY_SECRET_KEY,
   MY_REFRESH_KEY,
+  EMAIL,
+  PASSWORD
 };
 
 export default config;
