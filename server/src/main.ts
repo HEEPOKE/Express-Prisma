@@ -1,17 +1,7 @@
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
-import * as bodyParser from "body-parser";
+import server from "./server";
 import config from "./config/config";
-import router from "./routes";
 
-const app = express();
-
-app.use(cors());
-app.use(helmet());
-app.use(bodyParser.json());
-
-app.use("/api", router);
+const app = server();
 
 app.listen(config.PORT, () => {
   console.log(`http://localhost:${config.PORT}`);
