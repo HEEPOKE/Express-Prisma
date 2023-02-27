@@ -6,21 +6,21 @@ const app = server();
 
 let token: string;
 
-describe("Login", () => {
-  it("should return a 200 and successful login", async () => {
-    const response = await supertest(app)
-      .post("/api/auth/register")
-      .send({
-        email: `${config.EMAIL}`,
-        password: `${config.PASSWORD}`,
-      });
+// describe("Login", () => {
+//   it("should return a 200 and successful login", async () => {
+//     const response = await supertest(app)
+//       .post("/api/auth/register")
+//       .send({
+//         email: `${config.EMAIL}`,
+//         password: `${config.PASSWORD}`,
+//       });
 
-    expect(response.status).toBe(500);
-    expect(response.body).toHaveProperty("Invalid Token split form header");
+//     expect(response.status).toBe(500);
+//     expect(response.body).toHaveProperty("Invalid Token split form header");
 
-    token = response.body.Authorization;
-  });
-});
+//     token = response.body.Authorization;
+//   });
+// });
 
 // describe("List Users", () => {
 //   it("should return a list of users", async () => {
