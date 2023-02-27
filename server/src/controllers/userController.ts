@@ -6,45 +6,28 @@ async function listUser(req: Request, res: Response) {
   try {
     const user = await userServices.listUser();
 
-    let response = {
+    return res.status(200).json({
       message: "Success",
       payload: user,
-    };
-
-    return res.status(200).json(response);
+    });
   } catch (err: any) {
-    let response = {
-      message: "Failed to get user",
-    };
-    return res.status(500).json(response);
+    return res.status(500).json({ message: "Failed to get user" });
   }
 }
 
 async function getUserById(req: Request, res: Response) {
   try {
-    const id = Number(req.params.id) ?? false;
+    const id = Number(req.params.id);
 
     if (!id) {
-      let ErrMessage = {
-        message: "id required",
-      };
-      return res.json(ErrMessage);
+      return res.status(400).json({ message: "id required" });
     }
 
     const user = await userServices.getUserById(id);
 
-    let response = {
-      message: "Success",
-      payload: user,
-    };
-
-    return res.status(200).json(response);
-  } catch (err: any) {
-    let response = {
-      message: "Failed to get user",
-    };
-
-    return res.status(500).json(response);
+    return res.status(200).json({ message: "Success", payload: user });
+  } catch (err) {
+    return res.status(500).json({ message: "Failed to get user" });
   }
 }
 
@@ -57,83 +40,51 @@ async function createUser(req: Request, res: Response) {
 
       let payload = {
         email: req.body.email,
-        password: password,
+        password,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
       };
 
       const user = await userServices.createUser(payload);
 
-      let response = {
-        message: "Success",
-        payload: user,
-      };
-
-      return res.status(201).json(response);
+      return res.status(201).json({ message: "Success", payload: user }); 
     } else {
-      let message = {
-        message: "อีเมล์นี้มีผู้ใช้สมัครแล้ว",
-      };
-      return res.status(500).json(message);
+      return res.status(500).json({ message: "อีเมล์นี้มีผู้ใช้สมัครแล้ว" }); 
     }
-  } catch (err: any) {
-    let response = {
-      message: err,
-    };
-    return res.status(500).json(response);
+  } catch (err) { 
+    return res.status(500).json({ message: err }); 
   }
 }
 
 async function updateUser(req: Request, res: Response) {
   try {
-    const id = Number(req.params.id) ?? false;
+    const id = Number(req.params.id);
 
     if (!id) {
-      let ErrMessage = {
-        message: "id required",
-      };
-      return res.json(ErrMessage);
+      return res.status(400).json({ message: "id required" });
     }
 
     const user = await userServices.updateUser(id, req.body);
 
-    let response = {
-      message: "Success",
-      payload: user,
-    };
-
-    return res.status(200).json(response);
-  } catch (err: any) {
-    let response = {
-      message: "Update User Failed",
-    };
-    return res.status(500).json(response);
+    return res.status(200).json({ message: "Success", payload: user });
+  } catch (err) {
+    return res.status(500).json({ message: "Update User Failed" });
   }
 }
 
 async function deleteUser(req: Request, res: Response) {
   try {
-    const id = Number(req.params.id) ?? false;
+    const id = Number(req.params.id);
 
     if (!id) {
-      let ErrMessage = {
-        message: "Id required",
-      };
-      return res.json(ErrMessage);
+      return res.status(400).json({ message: "Id required" });
     }
 
     await userServices.deleteUser(id);
 
-    let response = {
-      message: "Success",
-    };
-
-    return res.status(200).json(response);
-  } catch (err: any) {
-    let response = {
-      message: "Delete Failed",
-    };
-    return res.status(500).json(response);
+    return res.status(200).json({ message: "Success" });
+  } catch (err) {
+    return res.status(500).json({ message: "Delete Failed" });
   }
 }
 
