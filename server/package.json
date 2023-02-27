@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ts-node ./src/main.ts",
     "dev": "./node_modules/nodemon/bin/nodemon.js",
+    "prod": "node ./distance/main.js",
     "build": "npx tsc",
     "test": "jest --coverage"
   },

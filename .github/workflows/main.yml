@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: '16.x'
       - name: Install dependencies
-        run: npm ci
+        run: npm i
       - name: Build TypeScript code
         run: npm run build
 
@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: '16.x'
       - name: Install dependencies
-        run: npm ci
+        run: npm i
       - name: Run tests
         run: npm run test
 
@@ -47,9 +47,9 @@ jobs:
         with:
           node-version: '16.x'
       - name: Install dependencies
-        run: npm ci
+        run: npm i
       - name: Deploy with PM2
-        run: pm2 start dist/server.js
+        run: npm run prod
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           API_KEY: ${{ secrets.API_KEY }}
