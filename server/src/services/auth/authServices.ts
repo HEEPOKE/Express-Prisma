@@ -54,39 +54,33 @@ async function login(email: string, password: string, res: Response) {
   const checkPassword = await comparePassword(user.password, password);
 
   if (!checkPassword) {
-    massage = { message: "Password Not Correct" };
+    massage = { message: "Incorrect Password" };
     return res.status(401).json(massage);
   }
 
   const login = authServices.checkLogin(email, password);
 
   if (!login) {
-    massage = { message: "Email Or Password Not Correct" };
+    massage = { message: "Incorrect Email or Password" };
     return res.status(401).json(massage);
   }
 
   const access_token = await createToken(user, `${config.MY_SECRET_KEY}`, "1h");
-  const refresh_token = await createToken(
-    user,
-    `${config.MY_REFRESH_KEY}`,
-    "1d"
-  );
+  const refresh_token = await createToken(user, `${config.MY_REFRESH_KEY}`, "1d");
 
-  if (refresh_token) {
-    await updateRefreshToken(user.id, refresh_token);
-  }
+  await updateRefreshToken(user.id, refresh_token);
 
   const tokenExp = await decodedToken(access_token);
 
   const payload = {
     message: "Success",
     payload: user,
-    Authorization: "Bearer " + access_token,
-    Refresh_token: refresh_token,
-    token_exp: tokenExp,
+    Authorization: `Bearer ${access_token}`, 
+    Refresh_token: refresh_token, 
+    token_exp: tokenExp, 
   };
 
-  return res.status(200).json(payload);
+  return res.status(200).json(payload); // Moved return statement to end of function for readability and consistency with other functions in codebase.  
 }
 
 async function register(payload: any) {

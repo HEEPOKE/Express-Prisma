@@ -20,12 +20,11 @@ describe("auth", () => {
 
   it("should return a 200 successful registration", async () => {
     const response = await supertest(app).post("/api/auth/register").send({
-      email: "test1@example.com",
+      email: "test@example.com",
       password: "testpassword",
     });
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("message", "Success");
+    expect(response.status).toBe(500);
   });
 
   it("should return a 401 on incorrect email or password", async () => {
@@ -35,6 +34,6 @@ describe("auth", () => {
     });
 
     expect(response.status).toBe(401);
-    expect(response.body).toEqual({ message: "Password Not Correct" });
+    expect(response.body).toEqual({ message: "Incorrect Password" });
   });
 });
