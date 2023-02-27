@@ -44,29 +44,24 @@ async function updateRefreshToken(id: number, Token: string) {
 
 async function login(email: string, password: string, res: Response) {
   const user = await userServices.findEmail(email);
+  let massage;
 
   if (!user) {
-    let massage = {
-      message: "Invalid email",
-    };
+    massage = { message: "Invalid email" };
     return res.status(401).json(massage);
   }
 
   const checkPassword = await comparePassword(user.password, password);
 
   if (!checkPassword) {
-    let massage = {
-      message: "Password Not Correct",
-    };
+    massage = { message: "Password Not Correct" };
     return res.status(401).json(massage);
   }
 
   const login = authServices.checkLogin(email, password);
 
   if (!login) {
-    let massage = {
-      message: "Email Or Password Not Correct",
-    };
+    massage = { message: "Email Or Password Not Correct" };
     return res.status(401).json(massage);
   }
 
@@ -76,11 +71,12 @@ async function login(email: string, password: string, res: Response) {
     `${config.MY_REFRESH_KEY}`,
     "1d"
   );
-  const tokenExp = await decodedToken(access_token);
 
   if (refresh_token) {
     await updateRefreshToken(user.id, refresh_token);
   }
+
+  const tokenExp = await decodedToken(access_token);
 
   const payload = {
     message: "Success",
@@ -101,12 +97,12 @@ async function register(payload: any) {
 
 async function refreshToken(user: any, res: Response) {
   try {
-    const User = db.user.findFirst({
+    const User = await db.user.findFirst({
       where: { id: user.id, email: user.email },
     });
 
     if (!User) {
-      return res.sendStatus(403).json({ message: "Token Not Correct" });
+      return res.status(403).json({ message: "Token Not Correct" });
     }
 
     const access_token = await createToken(
@@ -131,14 +127,17 @@ async function refreshToken(user: any, res: Response) {
       Token_Exp: tokenExp,
     };
 
-    return res.status(200).json({ payload: payload });
-  } catch (err: any) {
+    return res.status(200).json({ payload });
+  } catch (err) {
     return res.status(500).json({ message: "error" });
   }
 }
 
 async function logout(token: string, res: Response) {
   try {
+    console.log("====================================");
+    console.log(token);
+    console.log("====================================");
   } catch (err) {
     return res.status(500).json({ message: "Logout Error" });
   }
