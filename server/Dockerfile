@@ -1,23 +1,22 @@
-# Base image
-FROM node:14-alpine
+# Use an official Node runtime as a parent image
+FROM node:18
 
-# Create app directory
-WORKDIR /usr/src/app
+# Set the working directory to /app
+WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy source code
+# Copy the rest of the application code to the working directory
 COPY . .
 
-# Build TypeScript
+# Build the application
 RUN npm run build
 
-# Expose port
-EXPOSE 3000
+EXPOSE 6476
 
-# Start the app
+# Start the application
 CMD ["npm", "run", "start"]

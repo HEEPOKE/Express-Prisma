@@ -7,57 +7,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.x"
+
       - name: Install dependencies
-        run: cd server && npm install
-      - name: Build project
+        run: npm install
+
+      - name: Build the app
         run: cd server && npm run build
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: cd server && npm install
-      - name: Build project
-        run: cd server && npm run build
-      - name: Test project
+      - name: Start the app
+        run: cd server && npm run start & sleep 10
+
+      - name: Run tests
         run: cd server && npm run test
-
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/main'
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
-  #     - name: Install dependencies
-  #       run: cd server && npm install
-  #     - name: Build project
-  #       run: cd server && npm run build
-  #     - name: Deploy to production
-  #       run: cd server && npm run prod
-
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v2
-
-  #   - name: Build and Push Docker Image
-  #     uses: docker/build-push-action@v2
-  #     with:
-  #       context: .
-  #       push: true
-  #       tags: express-prisma/my-express-app-image:latest
-
-  #   - name: SSH into server and deploy Docker Image 
-  #     uses: appleboy/ssh-action@master  # SSH into the server and run the following commands 
-  #     with: 
-  #       script : |
-  #         docker pull express-prisma/my-express-app-image:latest # Pull the latest version of the image from registry  
-  #         docker rm -f express-prisma || true # Remove existing container if any 
-  #         docker run -d --name express-prisma -p 6476:6476 express-prisma/my-express-app-image:latest # Run new container with latest image version 
