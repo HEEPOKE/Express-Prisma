@@ -62,7 +62,7 @@ describe("List User By Id", () => {
         lastName: "daa",
       });
 
-    const id = createResponse.body.payload["id"];
+      const id = createResponse.body.data.payload["id"];
 
     const response = await supertest(app)
       .get(`/api/user/get/${id}`)
@@ -85,7 +85,7 @@ describe("update User", () => {
         lastName: "daa",
       });
 
-    const id = createResponse.body.payload["id"];
+      const id = createResponse.body.data.payload["id"];
 
     const response = await supertest(app)
       .put(`/api/user/update/${id}`)
