@@ -15,16 +15,16 @@ jobs:
       - name: Build project
         run: cd server && npm run build
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: cd server && npm install
-      - name: Build project
-        run: cd server && npm run build
-      - name: Deploy to production
-        run: cd server && npm run prod
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/main'
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #     - name: Install dependencies
+  #       run: cd server && npm install
+  #     - name: Build project
+  #       run: cd server && npm run build
+  #     - name: Deploy to production
+  #       run: cd server && npm run prod
