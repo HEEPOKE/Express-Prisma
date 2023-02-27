@@ -41,7 +41,7 @@ jobs:
       with:
         context: .
         push: false
-        tags: Express-Prisma/my-express-app-image:latest
+        tags: express-prisma/my-express-app-image:latest
 
     - name: SSH into server and deploy
       uses: appleboy/ssh-action@master
@@ -50,6 +50,6 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          docker pull Express-Prisma/my-express-app-image:latest
+          docker pull express-prisma/my-express-app-image:latest
           docker rm -f your-container-name || true
-          docker run -d --name your-container-name -p 3000:3000 Express-Prisma/my-express-app-image:latest
+          docker run -d --name your-container-name -p 6476:6476 express-prisma/my-express-app-image:latest
