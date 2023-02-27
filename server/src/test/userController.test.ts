@@ -1,26 +1,26 @@
-// import supertest from "supertest";
-// import server from "../server";
-// import config from "../config/config";
+import supertest from "supertest";
+import server from "../server";
+import config from "../config/config";
 
-// const app = server();
+const app = server();
 
-// let token: string;
+let token: string;
 
-// describe("Login", () => {
-//   it("should return a 200 and successful login", async () => {
-//     const response = await supertest(app)
-//       .post("/api/auth/register")
-//       .send({
-//         email: `${config.EMAIL}`,
-//         password: `${config.PASSWORD}`,
-//       });
+describe("Login", () => {
+  it("should return a 200 and successful login", async () => {
+    const response = await supertest(app)
+      .post("/api/auth/register")
+      .send({
+        email: `${config.EMAIL}`,
+        password: `${config.PASSWORD}`,
+      });
 
-//     expect(response.status).toBe(200);
-//     expect(response.body).toHaveProperty("message", "Success");
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("message", "Success");
 
-//     token = response.body.Authorization;
-//   });
-// });
+    token = response.body.Authorization;
+  });
+});
 
 // describe("List Users", () => {
 //   it("should return a list of users", async () => {
@@ -33,22 +33,22 @@
 //   });
 // });
 
-// describe("create User", () => {
-//   it("should return a 201 and create a user", async () => {
-//     const response = await supertest(app)
-//       .post("/api/user/create")
-//       .set("Authorization", `${token}`)
-//       .send({
-//         email: "johndoe@example.com",
-//         password: "yoyo5555",
-//         firstName: "c",
-//         lastName: "d",
-//       });
+describe("create User", () => {
+  it("should return a 201 and create a user", async () => {
+    const response = await supertest(app)
+      .post("/api/user/create")
+      .set("Authorization", `${token}`)
+      .send({
+        email: "johndoe@example.com",
+        password: "yoyo5555",
+        firstName: "c",
+        lastName: "d",
+      });
 
-//     expect(response.status).toBe(201);
-//     expect(response.body).toHaveProperty("message", "Success");
-//   });
-// });
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty("message", "Success");
+  });
+});
 
 // describe("List User By Id", () => {
 //   it("should return a 200 and get a user", async () => {
