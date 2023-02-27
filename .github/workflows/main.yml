@@ -51,5 +51,5 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
           docker pull express-prisma/my-express-app-image:latest
-          docker rm -f your-container-name || true
-          docker run -d --name your-container-name -p 6476:6476 express-prisma/my-express-app-image:latest
+          docker rm -f express-prisma || true
+          docker run -d --name express-prisma -p 6476:6476 express-prisma/my-express-app-image:latest
