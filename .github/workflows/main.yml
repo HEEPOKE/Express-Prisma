@@ -31,25 +31,21 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Build Docker image
+    - name: Build and Push Docker Image
       uses: docker/build-push-action@v2
       with:
         context: .
-        push: false
+        push: true
         tags: express-prisma/my-express-app-image:latest
 
-    - name: SSH into server and deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USERNAME }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        script: |
-          docker pull express-prisma/my-express-app-image:latest
-          docker rm -f express-prisma || true
-          docker run -d --name express-prisma -p 6476:6476 express-prisma/my-express-app-image:latest
+    - name: SSH into server and deploy Docker Image 
+      uses: appleboy/ssh-action@master  # SSH into the server and run the following commands 
+      with: 
+        script : |
+          docker pull express-prisma/my-express-app-image:latest # Pull the latest version of the image from registry  
+          docker rm -f express-prisma || true # Remove existing container if any 
+          docker run -d --name express-prisma -p 6476:6476 express-prisma/my-express-app-image:latest # Run new container with latest image version 
