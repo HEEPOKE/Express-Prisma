@@ -31,4 +31,4 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t express-prisma .
+          cd docker && docker build -t express-prisma .
