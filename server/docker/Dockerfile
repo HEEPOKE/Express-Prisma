@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y
 
 RUN git clone https://github.com/HEEPOKE/Express-Prisma.git .
 
-RUN npm install
+RUN cd server && npm install
 
 EXPOSE 8080
 
