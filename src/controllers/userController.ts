@@ -47,12 +47,12 @@ async function createUser(req: Request, res: Response) {
 
       const user = await userServices.createUser(payload);
 
-      return res.status(201).json({ message: "Success", payload: user }); 
+      return res.status(201).json({ message: "Success", payload: user });
     } else {
-      return res.status(500).json({ message: "อีเมล์นี้มีผู้ใช้สมัครแล้ว" }); 
+      return res.status(500).json({ message: "อีเมล์นี้มีผู้ใช้สมัครแล้ว" });
     }
-  } catch (err) { 
-    return res.status(500).json({ message: err }); 
+  } catch (err) {
+    return res.status(500).json({ message: err });
   }
 }
 
