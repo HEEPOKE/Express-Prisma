@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD
 
 on:
   push:
@@ -30,5 +30,4 @@ jobs:
       #   run: npm run test
 
       - name: Build Docker image
-        run: |
-          cd docker && docker build -t express-prisma .
+        run: cd docker && docker build -t express-prisma .
