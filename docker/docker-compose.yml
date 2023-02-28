@@ -11,9 +11,7 @@ services:
     depends_on:
       - db
     # env_file:
-    #   - ./server/.env
-    volumes:
-     - ./server:/var/www
+    #   - ./.env
     expose:
       - "8080"
   db:

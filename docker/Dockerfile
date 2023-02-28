@@ -1,10 +1,12 @@
 FROM node:18
 
-WORKDIR /var/www/
+WORKDIR /var/www
 
 RUN apt-get update && apt-get install -y git
 
 RUN git clone https://github.com/HEEPOKE/Express-Prisma.git .
+
+COPY package*.json ./
 
 RUN npm install
 

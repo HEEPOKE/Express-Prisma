@@ -18,13 +18,13 @@ jobs:
           node-version: "18.x"
 
       - name: Install dependencies
-        run: cd server && npm install
+        run: npm install
 
       - name: Build the app
-        run: cd server && npm run build
+        run: npm run build
 
       - name: Start the app
-        run: cd server && npm run start & sleep 10
+        run: npm run start & sleep 10
 
       - name: Run tests
-        run: cd server && npm run test
+        run: npm run test
