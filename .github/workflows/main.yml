@@ -29,5 +29,10 @@ jobs:
       # - name: Run tests
       #   run: npm run test
 
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Build Docker image
         run: cd docker && docker build -t express-prisma .
+      - name: Deploy to production
+        run: docker-compose up -d
