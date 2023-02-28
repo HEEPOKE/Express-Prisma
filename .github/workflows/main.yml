@@ -42,6 +42,6 @@ jobs:
 
       - name: Build Docker image
         run: cd docker && docker build -t express-prisma .
-        
+
       - name: Deploy to production
-        run: docker-compose up -d
+        run: cd docker && docker-compose up -d
