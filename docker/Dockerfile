@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y git
 
 RUN git clone https://github.com/HEEPOKE/Express-Prisma.git
 
-COPY package*.json ./
+# COPY package*.json ./
 
 RUN npm install
 
