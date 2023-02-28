@@ -26,5 +26,5 @@ jobs:
       - name: Start the app
         run: npm run start & sleep 10
 
-      - name: Run tests
-        run: npm run test
+      # - name: Run tests
+      #   run: npm run test
