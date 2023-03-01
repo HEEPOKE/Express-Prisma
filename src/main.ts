@@ -3,6 +3,8 @@ import config from "./config/config";
 
 const app = server();
 
-app.listen(config.PORT, () => {
-  console.log(`http://localhost:${config.PORT}`);
+const port = config.PORT || 6476;
+
+app.listen(port, () => {
+  console.log(`http://localhost:${port}`);
 });
