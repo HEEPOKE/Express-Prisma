@@ -27,7 +27,7 @@ services:
       - "3306:3306"
   nginx:
     image: nginx:alpine
-    restart: always
+    # restart: always
     ports:
       - "80:80"
       - "443:443"
